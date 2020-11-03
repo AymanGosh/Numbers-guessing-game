@@ -1,0 +1,414 @@
+/* 
+Campus:  Beer Sheva 
+Author: Ayman AdlRhman, ID: 311549737
+*/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+
+enum Number{zero=0,one,two,three,four,fife};
+#define ten 10
+#define thirtyFive 35
+#define sixten 60 
+#define ConversionToSmallLetter 32 
+
+void Menu();
+////////////////////
+void Option1();
+char EnterALetter();
+char ConversionToSmallLetters(char letter);
+int CheackLetter(char letter);
+char Maxletter(char letter1, char letter2);
+char Minletter(char letter1, char letter2);
+///////////////////
+void Option2();
+int GiveMeAPostiveNumber();
+int MaxNumber(int num1, int num2);
+int MinNumber(int num1, int num2);
+int Random(int MAX_VALUE, int MIN_VALUE);
+int TrueNUmber(int rang1, int rang2);
+int IfPostiveNumber(int number);
+int CheckIfInRang(int number, int rang1, int rang2);
+/////////////////////
+void Option3();
+void print(char type, int num1, int num2);
+void TheLastFirsRow(int number);
+/////////////////////
+void Option4();
+int Prime(int number);
+int palindrome(int number);
+/////////////////////////
+void Option5();
+
+int main()
+{
+	srand(time(NULL));
+	Menu();
+}
+
+void Menu()// func print the options 
+{
+	int choice, flag=0;
+	do{
+		print('-', one,35);//for the design 
+		printf("\n\t-Menu-\nPlease choose an option :\n\n\n1 - Magic letters\n\n2 - The guessing game\n\n3 - Pattern print\n\n4 - Prime Palindrome scavenger hunt\n\n5 - Exit\n");
+		print('-', one, 35);//for the design  
+		printf("\n\nEnter your choice : ");
+		choice = TrueNUmber(one, fife);// the func TrueNUmber make us choce just a true number 
+		switch (choice)
+		{
+		case one: Option1(); break;//go to the func option 1 
+		case two: Option2(); break;//go to the func option 2
+		case three: Option3(); break;//go to the func option 3
+		case four: Option4(); break;//go to the func option 4
+		case fife: Option5(); flag = one; break; //if the flag is 1 : exit 
+		}
+	} while (flag != one);// if the term is not true : print the menu options 
+
+
+}//print the menu
+///////////////////////////
+void Option1()
+{
+	char ch1, ch2, tempCh1, tempCh2, lettermax, lettermin;
+	int counterForDrsign = 0;
+	system("cls");// for the design clear the console 
+	printf("enter two letters please to start : \n");
+	getchar(); // delete the enter press 
+	print('-', one, thirtyFive);// for the design 
+		printf("\nthe first letter:");
+		ch1=EnterALetter();// enter a letter in Ch1 : true letter
+		
+		printf("\nthe second letter:");
+		ch2 = EnterALetter();
+		ch1 = ConversionToSmallLetters(ch1);// if letter is big the func convert it to small letter 
+		ch2 = ConversionToSmallLetters(ch2);// /\ /\ /\ /\ 
+
+	lettermax = Maxletter(ch1,ch2); // the func Maxletter reurn the max betwen ch & ch2
+	lettermin = Minletter(ch1, ch2);// the  func Min letter reurn the min betwen ch & ch2
+
+	ch1 = lettermin;
+	ch2 = lettermax;
+	tempCh1 = tempCh2 = ch1;
+	printf("\n");//for the design
+	print('+', one, thirtyFive);// for the design 
+	printf("\n");// for the design
+	while (tempCh1 != lettermax + one  && tempCh2 != lettermax + one) // if the term not true the while run to get the last two letters : ex:cc
+	{
+		while (tempCh2 != lettermax + one)// while the term is not  true  the code run to get the last letter (ch2)aa ab ac\n
+		{
+			printf("%c%c  ", tempCh1, tempCh2);
+			tempCh2++; 
+		}//while 2
+		tempCh1 = lettermin + one;//the next letter
+		tempCh2 = lettermin + one;
+		lettermin++;
+		printf("\n");
+	}//while 2
+	print('+', one, thirtyFive);// for the design
+	printf("\n\n");// for the design 
+}
+char EnterALetter()// func make us to enter just letters 
+{
+	char letter,counterError=0; 
+
+	do{
+		if (counterError > zero)printf("Try again:");
+		scanf("%c", &letter);
+		getchar();
+		counterError++;
+	} while (!CheackLetter(letter));// if it is a letter
+	return letter;
+
+}
+char ConversionToSmallLetters(char letter)//convertion from capital letter to small leter
+{
+	if(letter>='A'&& letter <= 'Z')
+	{
+		return(letter += ConversionToSmallLetter);// tabel asci
+	}
+	return letter;
+}
+int CheackLetter(char letter)// func return 1 if the letter is a letter
+{
+
+	if ((letter >= 'a'&&letter <= 'z') || (letter >= 'A' && letter <= 'Z'))
+	{
+		return one;
+	}
+	return zero;
+
+}
+char Maxletter(char letter1, char letter2)// func retrun  the bigest letter from 1||2
+{
+	if (letter1 > letter2)
+	{
+		return letter1;
+	}
+	else return letter2; 
+
+}
+char Minletter(char letter1, char letter2)// func return the min letter from 1||2
+{
+	if (letter1 < letter2)
+	{
+		return letter1;
+	}
+	else return letter2;
+}
+/////////////////
+void Option2()// option 2 
+{
+	int  guesses, counterOfGussesleft, flag = 0, numberOfUser, counterEror = 0;
+	int maxNU, minNu, number1, number2, RandoomValue, ifYouWantToPlay;
+	system("cls");// for the design
+	printf("You chosed The guessing game , in this game you have to chose a number\n betwen two ranges.\n");
+	print('-', one, thirtyFive);// for the design
+	printf("\nIf you want to play a new game please press '1' \nIf you want to back to the munu press '0' : ");
+	ifYouWantToPlay = TrueNUmber(zero, one);// the user chose 1 if he want to play , TrueNumber make us chose just  1 or 0 
+
+	if (ifYouWantToPlay != one) // if the user chose 0 ,, return to the menu 
+		return zero;
+	do{
+		printf("\n\n-Enter the first number of the range:");
+		number1 = GiveMeAPostiveNumber();// GiveMeAPostiveNUmber make us choose just a postives numbers
+
+		printf("\n-Enter the second number of te range:");
+		number2 = GiveMeAPostiveNumber();
+
+		maxNU = MaxNumber(number1, number2); // MaxNUmber return the max betwen 1 and 2 
+		minNu = MinNumber(number1, number2);// **** /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ 
+
+		printf("\n-Enter the number of guesses you would like to make [2-10] :");
+		guesses = TrueNUmber(two, ten);// we make the user choose just number betwen {2-10}
+		printf("\n");// for the design
+		print('+', one, thirtyFive);// for the design
+		counterOfGussesleft = guesses; // how many gusset left to play 
+
+		RandoomValue = Random(maxNU, minNu);// make a randoon number betwn two numbers 
+		do{
+			if (counterEror > zero)// if not the first time of the error choise 
+			{
+				printf("  X->Invalid guess - not in the required range [%d-%d]\n\n\n", minNu, maxNU);
+				counterEror--;
+			}
+			if (counterOfGussesleft == guesses)// if the first time print how many gusses
+				printf("\n  Enter your guess (you have %d guesses left) :", counterOfGussesleft);
+			if (guesses > counterOfGussesleft)// if not the first time of the choice number 
+			{
+				if (RandoomValue > numberOfUser)// if the user have to chose a higher number 
+					printf("  Enter a higher number (you have %d guesses left) :", counterOfGussesleft);
+				else// else the user have to chose lower number 
+					printf("  Enter a lower number (you have %d guesses left) :", counterOfGussesleft);
+			}
+			scanf("%d", &numberOfUser);
+			counterOfGussesleft--;// gusses - 1 
+			if (!(CheckIfInRang(numberOfUser, minNu, maxNU))) // if the number is not  in the rang  error + 1 
+				counterEror++;
+			if (numberOfUser == RandoomValue)// if the user choose the true number he win 
+				flag = one;
+		} while (!(counterOfGussesleft == zero || flag == one));// the term run to get win or zero gusses
+		print('-', one,thirtyFive);// for the design
+		if (flag == one)// if the user win 
+		{
+			printf("\n|Congratulations - you have won ! |\n");
+			print('-', one, thirtyFive);// for the design
+
+		}
+		else// if the user lose 
+			printf("\n\nYou lose !\n");
+
+		printf("\n\n-->You want to play again ?\n  If you want press '1'\n  If you want to back to the menu press'0':");
+		ifYouWantToPlay = TrueNUmber(zero, one);// chose just 1 or 0  
+
+	} while (ifYouWantToPlay == one);
+	system("cls");// for the design
+		
+
+}
+int GiveMeAPostiveNumber()// make us to chose just a postive number 
+{
+	int number,conterEror=0;
+	do{
+		if (conterEror > 0)
+			printf("\n** Eror **\nYou have to enter just a postive numbers!:");
+		scanf("%d", &number);
+		conterEror++;
+	} while (number<0);
+	return number;
+}
+int MaxNumber(int num1, int num2)// return the max number betwen two number we send t the func 
+{
+	if (num1 > num2)
+	{
+		return num1;
+	}
+	else return num2;
+}
+int MinNumber(int num1, int num2) // return the min number of num21 and num 2 
+{
+	if (num1 > num2)
+	{
+		return num2;
+	}
+	else return num1;
+}
+int Random(int MAX_VALUE, int MIN_VALUE)// make a randoom number betwn two ranges 
+{
+	
+	return((rand() % (MAX_VALUE - MIN_VALUE + 1)) + MIN_VALUE);
+}
+int TrueNUmber(int rang1, int rang2)// func make us to chose number betwen rang1 and rang2 
+{
+	int number,counterEror=0;
+	do{
+		
+		if (IfPostiveNumber(counterEror))
+		{
+			printf("try again: ");
+		}
+		
+		scanf("%d", &number);
+		counterEror++;
+	} while (!(CheckIfInRang(number,rang1,rang2)));
+	return number;
+}
+int IfPostiveNumber(int number)// if the number is postive return one 
+{
+	if (number > zero)
+	{
+		return 1;
+	}
+	else return zero;
+}
+int CheckIfInRang(int number,int rang1, int rang2)// if the number betwn rang1 and rang2 return 1 
+{
+		if(number >= rang1&&number <= rang2)
+	       return one;
+		else return zero;
+}
+///////////////////////////
+void Option3()// for the option 3 to print 
+{
+	system("cls");// for the design
+	int i,j,z,number;
+	printf("\n\nEnter a number betwen 1-60: ");
+	number = TrueNUmber(two, sixten);// make us choose number betwn 2-60 to print 
+	
+	for (i = zero ; i <= number; i++)
+	{
+		if (i == zero)
+			TheLastFirsRow(number);
+
+		printf("|");
+		for (j = number; j > i; j--)// print the x from number to 1 
+		{
+			printf("X");
+		}
+		printf(" ");
+		for (z = zero; z < i; z++)// print the O from 0 to number  
+		{
+			printf("O");
+		}
+		printf("|");
+		printf("\n");
+
+		if (i == number)
+			TheLastFirsRow(number);
+	}
+}
+void print(char type, int num1, int num2)// print char ,, num2 times 
+{
+	int i;
+	for (i = num1; i <= num2; i++)
+	{
+		switch (type)
+		{
+		case '-':printf("-"); break;
+		case 'X':printf("X"); break;
+		case 'O':printf("O"); break;
+		case'+':printf("+"); break;
+		case'\n':printf("\n"); break;
+		case '|':printf("|"); break;
+		case ' ':printf(" "); break;
+
+		}
+	}
+}
+void TheLastFirsRow(int number)// print the one and the last rows 
+{
+	
+	print('+', one, one);//func print the + one time 
+	print('-', zero, number);//func print the - number times 
+	print('+', one, one);//func print the + one time 
+	print('\n', one, one);//func print the \n
+}
+///////////////////////
+void Option4()
+{
+	int number1, number2,i,counter=0,tempNu1,tempNu2;
+	system("cls");// for the design
+	printf("Enter from any number you want to start to any number \nyou want to end in the area :\n");
+	print('-', one, thirtyFive);// for the design
+	printf("\nfirst number : ");
+	tempNu1 = GiveMeAPostiveNumber();
+	printf("\nsecond number : ");
+	tempNu2 = GiveMeAPostiveNumber();
+
+	number2 = MaxNumber(tempNu1, tempNu2);// return the max number betwen num1 and num2 
+	number1 = MinNumber(tempNu1, tempNu2);// return the min betwen two numbrs 
+	print('+', one, thirtyFive);// for the design
+	printf("\n");// for the design
+		for (i = number1; i <= number2; i++)// check who number is apply the term pilndrom and prime from two number 
+		{
+			if ((Prime(i)) &&(palindrome(i)))// if the term is true print the numeber 
+			{
+				printf("%d\t", i); counter++;
+			}
+		}
+		print('\n', one, one);// for the design
+		print('+', one, thirtyFive);// for the design
+		printf("\n");// for the design
+	if (counter == zero)// if ther are not number betwen the range print : 
+		printf("ther are no number in your area ! \n"); 
+}
+int Prime(int number)// return 1 if the number is prime 
+{
+	int i, temp = 0;
+	for (i = one ; i <number; i++)
+	{
+		temp = number%i;
+		if (temp == zero && i != one)
+			return zero;
+	}
+	return one;
+}
+int palindrome(int number)// return 1 if the number is palindrom
+{
+	int  palindRome = 0, temp; 
+	temp = number;
+	while (temp != zero)
+	{
+		palindRome = palindRome * ten;// we take the last digit in the number and put it in the first didt in the number to check if they identical
+		palindRome = palindRome + temp % ten;
+		temp = temp / ten;
+	}
+
+	if (number == palindRome)
+		return one;
+	else
+		return zero;
+
+}
+////////////////
+void Option5()
+{
+	system("cls");// for the design
+	printf("\n\n\n\t");// for the design
+	print('+', one, thirtyFive);// for the design
+	printf("\n\t|\t\t\t\t  |\n\t| Have a great day & see you soon!|\n\t|\t\t\t\t  |\n\t");
+	print('+', one, thirtyFive);// for the design
+	printf("\n\n");// for the design
+	return 0;
+}
